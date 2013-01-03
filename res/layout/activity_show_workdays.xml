@@ -7,7 +7,15 @@
     <ListView
         android:id="@+id/mylist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_weight="1.29" >
     </ListView>
+
+    <Button
+        android:id="@+id/saveAndSendButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="saveAndSendAction"
+        android:text="Save to CSV and send" />
 
 </LinearLayout> 
