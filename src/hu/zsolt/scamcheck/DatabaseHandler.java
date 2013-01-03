@@ -14,7 +14,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
  
     // Database Name
     private static final String DATABASE_NAME = "workDatabase";
@@ -112,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	Log.i(this.getClass().getName(), "Getting al workdays! "); 
         ArrayList<TimeSpentWorking> workDayList = new ArrayList<TimeSpentWorking>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_WORKTIME;
+        String selectQuery = "SELECT  start_time,end_time,date FROM " + TABLE_WORKTIME;
  
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -120,7 +120,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                TimeSpentWorking tsw = new TimeSpentWorking(Long.parseLong(cursor.getString(1)),Long.parseLong(cursor.getString(2)),cursor.getString(3));
+                TimeSpentWorking tsw = new TimeSpentWorking(Long.parseLong(cursor.getString(0)),Long.parseLong(cursor.getString(1)),cursor.getString(2));
                 // Adding contact to list
                 Log.i(this.getClass().getName(),"Record: " + tsw.getStartedWork() + " | " + tsw.getEndedWork() + " | " + tsw.getDateOfWorkday());
                 workDayList.add(tsw);
@@ -156,6 +156,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_END_TIME, endedWork);
  
         // updating row
+        
         SQLiteDatabase db = this.getWritableDatabase();
         
         
@@ -168,11 +169,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int getStoredWorkdaysCount() {
     	
     	String query = "SELECT count(id) from worktime";
-		Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
+    	SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
 		cursor.moveToFirst();
 		int numberOfDashboardPages = cursor.getInt(0);
 		cursor.close();
-    	         
+    	db.close();         
         Log.i(this.getClass().getName(), "All workdays: " + numberOfDashboardPages);  
         return numberOfDashboardPages;
     }
@@ -180,12 +182,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public long getLastId(){
     	
     	String query = "SELECT " + KEY_ID + " from " + TABLE_WORKTIME + " order by " + KEY_ID + " DESC limit 1";
-    	SQLiteDatabase db = this.getReadableDatabase();
+    	SQLiteDatabase db = this.getWritableDatabase();
     	Cursor c = db.rawQuery(query,null);
     	if (c != null && c.moveToFirst()) {
     	    long lastId = c.getLong(0);
     	    Log.i(this.getClass().getName(),"LAST ID is: " + lastId);
     	    c.close();
+    	   
     	    return lastId;
     	}
     	
@@ -234,7 +237,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	Log.i(this.getClass().getName(),"Saving UI to DB");
 		
     	SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_WORKTIME, null, null);
+        db.delete(TABLE_PREFERENCES, null, null);
     	
     	 
         ContentValues values = new ContentValues();
