@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" 
+    android:background="#B5B5B5"
+    android:theme="@android:style/Theme.NoTitleBar">
+
+    <Button
+        android:id="@+id/startedWorkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="I HAVE ENTERED WORK"
+        android:background="@drawable/btn_green"
+        android:onClick="startTime"/>
+
+    <Button
+        android:id="@+id/endedWorkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_red"
+        android:text="I HAVE STOPPED WORKING"
+        android:onClick="endTime"/>
+
+    <TextView
+        android:id="@+id/displayView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startedWorkButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:text="Time worked today:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Chronometer
+        android:id="@+id/chronoMeter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/endedWorkButton"
+        android:layout_centerHorizontal="true"
+        android:text="Chronometer" />
+
+    <TextView
+        android:id="@+id/workStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/chronoMeter"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/emptyString"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/deleteWorkdays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="DELETE"
+        android:onClick="deleteButtonAction" />
+
+    <Button
+        android:id="@+id/showStatsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/deleteWorkdays"
+        android:text="Show Stats"
+        android:onClick="showStatsAction" />
+
+</RelativeLayout>
