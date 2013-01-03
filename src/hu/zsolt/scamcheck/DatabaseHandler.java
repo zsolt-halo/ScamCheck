@@ -14,7 +14,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
     private static final String DATABASE_NAME = "workDatabase";
@@ -166,21 +166,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
   
     public int getStoredWorkdaysCount() {
-    	Log.i(this.getClass().getName(), "Getting workday count!"); 
     	
-        String countQuery = "SELECT * FROM " + TABLE_WORKTIME;
-        
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        
-        int workdays = cursor.getCount();
-        
-        Log.i(this.getClass().getName(), "All workdays: " + workdays); 
-        
-        cursor.close();
-        db.close();       
-        // return count       
-        return workdays;
+    	String query = "SELECT w." + KEY_DATE + " FROM worktime w WHERE " + KEY_DATE + " is not null";
+		Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
+		int numberOfDashboardPages = cursor.getCount();
+		cursor.close();
+    	         
+        Log.i(this.getClass().getName(), "All workdays: " + numberOfDashboardPages);  
+        return numberOfDashboardPages;
     }
     
     public long getLastId(){
