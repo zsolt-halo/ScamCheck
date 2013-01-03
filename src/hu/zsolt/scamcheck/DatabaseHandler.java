@@ -167,9 +167,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
   
     public int getStoredWorkdaysCount() {
     	
-    	String query = "SELECT w." + KEY_DATE + " FROM worktime w WHERE " + KEY_DATE + " is not null";
+    	String query = "SELECT count(id) from worktime";
 		Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
-		int numberOfDashboardPages = cursor.getCount();
+		cursor.moveToFirst();
+		int numberOfDashboardPages = cursor.getInt(0);
 		cursor.close();
     	         
         Log.i(this.getClass().getName(), "All workdays: " + numberOfDashboardPages);  
