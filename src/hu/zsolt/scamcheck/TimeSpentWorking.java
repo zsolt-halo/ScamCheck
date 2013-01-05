@@ -50,7 +50,7 @@ public class TimeSpentWorking {
 		int hours   = (int) (((secs)/60)/60);
 		int seconds = (int) (secs - (hours*3600) - (minutes*60));
 		
-		return "Worked: " + dateOfWorkday + ": " + hours + ":" + minutes + ":" + seconds;
+		return "Worked on: " + dateOfWorkday + "\nTime:" + hours + ":" + minutes + ":" + seconds;
 		
 	}
 			

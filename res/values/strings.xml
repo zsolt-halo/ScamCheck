@@ -5,8 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="emptyString"></string>
-    <string name="workStatusWorking">Work Status: Working</string>
-    <string name="workStatusNotWorking">Work Status: Not Working</string>
+    <string name="workStatusWorking">Work Status: WORKING </string>
+    <string name="workStatusNotWorking">Work Status: NOT WORKING</string>
     <string name="title_activity_show_workdays">ShowWorkdays</string>
 
 </resources>

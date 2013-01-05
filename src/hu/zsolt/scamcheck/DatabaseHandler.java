@@ -207,6 +207,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
     
+    public void deleteRecord(long id){
+    	
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	db.delete(TABLE_WORKTIME, KEY_START_TIME + " = " + id, null);
+    	db.close();
+    	
+    }
+    
     
    
     /*////////////////////////////////////////////////////////////////////////////*/

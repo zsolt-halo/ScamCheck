@@ -1,7 +1,11 @@
 package hu.zsolt.scamcheck;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -46,6 +51,8 @@ public class MainActivity extends Activity {
 	@SuppressWarnings({})
 	public void startTime(View view) {
 
+		((TextView)findViewById(R.id.workStateView)).setText(new TextFormatter().setTextToGREEN((getResources().getString(R.string.workStatusWorking))));
+		((TextView)findViewById(R.id.workStateView)).setTextColor(Color.GREEN);
 		baseTimeForChronometer = SystemClock
 				.elapsedRealtime();
 		((Chronometer) findViewById(R.id.chronoMeter)).setBase(baseTimeForChronometer);
@@ -68,24 +75,19 @@ public class MainActivity extends Activity {
 	}
 
 	public void endTime(View view) {
-
-		((Chronometer) findViewById(R.id.chronoMeter)).stop();
-		this.chronometerRunning = false;
-
-		((Button) findViewById(R.id.startedWorkButton)).setEnabled(true);
-		((Button) findViewById(R.id.endedWorkButton)).setEnabled(false);
-		((Button) findViewById(R.id.deleteWorkdays)).setEnabled(true);
-		((Button) findViewById(R.id.showStatsButton)).setEnabled(true);
-
-		endTime = dateHandler.getTimeInMillis();
-
-		db.updateWorkday(endTime);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("You have chosen to STOP!\nARE YOU SURE?\nThis cannot be UNDONE!").setPositiveButton("YES", dialogClickListener)
+		    .setNegativeButton("NO", dialogClickListener).show();
 
 	}
 
 	public void deleteButtonAction(View view) {
 
-		db.deleteTableContents();
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("YOU ARE ABOUT TO DELETE EVERYTHING!\nARE YOU SURE?").setPositiveButton("YES", dialogClickListenerDeleteDatabase)
+		    .setNegativeButton("NO", dialogClickListenerDeleteDatabase).show();
+		
 
 	}
 
@@ -153,6 +155,19 @@ public class MainActivity extends Activity {
 			
 			}
 		
+		if(pref.isKEY_START_BUTTON_STATE()){
+			
+			((TextView)findViewById(R.id.workStateView)).setText((new TextFormatter().setTextToRED(getResources().getString(R.string.workStatusNotWorking))));
+			((TextView)findViewById(R.id.workStateView)).setTextColor(Color.RED);
+			
+		}
+		else {
+			
+			((TextView)findViewById(R.id.workStateView)).setText((new TextFormatter().setTextToGREEN(getResources().getString(R.string.workStatusWorking))));
+			((TextView)findViewById(R.id.workStateView)).setTextColor(Color.GREEN);
+			
+		}
+		
 		}
 		
 	}
@@ -170,6 +185,52 @@ public class MainActivity extends Activity {
 	}
 	
 	
+	/*DIALOG BOX*/
+	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+	        case DialogInterface.BUTTON_POSITIVE:
+	        	/*FINISHED WORK, FOR SURE*/
+	        	((TextView)findViewById(R.id.workStateView)).setText((new TextFormatter().setTextToRED(getResources().getString(R.string.workStatusNotWorking))));
+	        	((TextView)findViewById(R.id.workStateView)).setTextColor(Color.RED);
+	        	((Chronometer) findViewById(R.id.chronoMeter)).stop();
+	    		chronometerRunning = false;
+
+	    		((Button) findViewById(R.id.startedWorkButton)).setEnabled(true);
+	    		((Button) findViewById(R.id.endedWorkButton)).setEnabled(false);
+	    		((Button) findViewById(R.id.deleteWorkdays)).setEnabled(true);
+	    		((Button) findViewById(R.id.showStatsButton)).setEnabled(true);
+
+	    		endTime = dateHandler.getTimeInMillis();
+
+	    		db.updateWorkday(endTime);
+	            break;
+
+	        case DialogInterface.BUTTON_NEGATIVE:
+	            /*NOTHING HAPPENS*/
+	            break;
+	        }
+	    }
+	};
+	
+	
+	DialogInterface.OnClickListener dialogClickListenerDeleteDatabase = new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+	        case DialogInterface.BUTTON_POSITIVE:
+	        	
+	        	db.deleteTableContents();
+	        	
+	            break;
+
+	        case DialogInterface.BUTTON_NEGATIVE:
+	            
+	            break;
+	        }
+	    }
+	};
 	
 	
 	

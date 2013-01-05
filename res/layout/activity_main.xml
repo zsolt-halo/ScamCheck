@@ -28,16 +28,6 @@
         android:text="I HAVE STOPPED WORKING"
         android:onClick="endTime"/>
 
-    <TextView
-        android:id="@+id/displayView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/startedWorkButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:text="Time worked today:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Chronometer
         android:id="@+id/chronoMeter"
         android:layout_width="wrap_content"
@@ -46,18 +36,6 @@
         android:layout_centerHorizontal="true"
         android:text="Chronometer" />
 
-    <TextView
-        android:id="@+id/workStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/chronoMeter"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="@string/emptyString"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/deleteWorkdays"
         android:layout_width="wrap_content"
@@ -65,7 +43,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="DELETE"
+        android:text="DELETE ALL DATA"
         android:onClick="deleteButtonAction" />
 
     <Button
@@ -75,7 +53,18 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/deleteWorkdays"
-        android:text="Show Stats"
+        android:text="STATS"
         android:onClick="showStatsAction" />
+
+    <TextView
+        android:id="@+id/workStateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/startedWorkButton"
+        android:gravity="center"
+        android:text="@string/emptyString"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
